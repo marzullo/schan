@@ -6,15 +6,6 @@ pub mod sockets {
     use snow::{Builder, HandshakeState};
     use crate::stream::stream::{StreamManager};
     
-    fn read_key() -> Result<String> {
-        let mut file = File::open("key.txt")?;
-        let mut content = String::new();
-    
-        file.read_to_string(&mut content)?;
-    
-        Ok(content)
-    } 
-    
     fn create_noise_responder() -> HandshakeState {
         let builder: Builder<'_> = Builder::new("Noise_XX_25519_ChaChaPoly_BLAKE2s".parse().unwrap());
         let private_key = builder.generate_keypair().unwrap().private;
@@ -61,7 +52,7 @@ pub mod sockets {
     
     pub fn server_socket() -> StreamManager {
         let mut buf = vec![0u8; 65535];
-        let (mut stream, _) = TcpListener::bind("127.0.0.1:20000").unwrap().accept().unwrap();
+        let (mut stream, _) = TcpListener::bind("0.0.0.0:20000").unwrap().accept().unwrap();
     
         let mut noise = create_noise_responder();
     
