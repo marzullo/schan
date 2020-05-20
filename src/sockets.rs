@@ -50,9 +50,9 @@ pub mod sockets {
         Ok(payload)
     }
     
-    pub fn server_socket() -> StreamManager {
+    pub fn server_socket(addr: String) -> StreamManager {
         let mut buf = vec![0u8; 65535];
-        let (mut stream, _) = TcpListener::bind("0.0.0.0:20000").unwrap().accept().unwrap();
+        let (mut stream, _) = TcpListener::bind(addr).unwrap().accept().unwrap();
     
         let mut noise = create_noise_responder();
     
